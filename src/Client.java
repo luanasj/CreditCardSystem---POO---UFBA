@@ -2,7 +2,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Cliente {
+public class Client {
     private String name;
     private Date birthday;
     private boolean enterprise;
@@ -10,7 +10,7 @@ public class Cliente {
     private Adress adress;
     private List<CreditCard> creditCard;
 
-    public Cliente(String name, Date birthday, boolean enterprise, String doc, Adress adress) {
+    public Client(String name, Date birthday, boolean enterprise, String doc, Adress adress) {
         this.name = name;
         this.birthday = birthday;
         this.enterprise = enterprise;
@@ -25,12 +25,10 @@ public class Cliente {
         return clientInfo;
     }
 
-    public String getClientCards() {
+    public void createCreditCard(){}
 
-    }
+    public String getClientCards(){}
 
-    public String getCardInfo() {
-
-    }
+    public String getCardInfo(){}
 
 }

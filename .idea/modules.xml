@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/cartaoDeCredito.iml" filepath="$PROJECT_DIR$/cartaoDeCredito.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CreditCardSystem---POO---UFBA.iml" filepath="$PROJECT_DIR$/CreditCardSystem---POO---UFBA.iml" />
     </modules>
   </component>
 </project>
