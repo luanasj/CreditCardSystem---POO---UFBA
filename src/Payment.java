@@ -1,15 +1,19 @@
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class Payment {
-    private Date month;
-    private Date year;
+    private LocalDate date;
+
+
+
     private double value;
 
-    public Payment(){
-
+    public Payment(LocalDate date,double value){
+        this.date = date;
+        this.value = value;
     }
 
     public String getPaymentInfo(){
-
+        return "Data do Pagamento: " + date + "\nValor: " + value;
     }
 }
