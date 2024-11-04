@@ -7,7 +7,7 @@ public class Establishment {
 
     }
 
-    public getFacilityInfo(){
+    public void getFacilityInfo(){
 
     }
 }

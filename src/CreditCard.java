@@ -1,30 +1,62 @@
-import java.util.Date;
+import javax.print.DocFlavor;
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class CreditCard {
     private String number;
     private String password;
-    private Date expiration;
+    private LocalDate expiration;
     private String securityCode;
+    private boolean special;
     private double monthlyFee;
     private double limit;
-    private double closing;
+    private LocalDate closing; //saldo,depesa do mes
     private Benefits benefits;
     private Client holder;
     private List<Bill> bills;
     private List<Transaction> history;
     private List<Payment> payments;
 
+    private CreditCard(int dayOfClosing,int monthOfClosing, Client holder,boolean special){
+        this.number = UUID.randomUUID().toString();
+        this.password = String.valueOf(Math.floor(Math.random()*1000));
+        this.expiration = LocalDate.now().plusYears(4);
+        this.securityCode = String.valueOf(Math.floor(Math.random()*100));
+        this.closing = LocalDate.of(LocalDate.now().getYear(), monthOfClosing,dayOfClosing);
+        this.holder = holder;
+        this.bills = new LinkedList<Bill>();
+        this.history = new LinkedList<Transaction>();
+        this.payments = new LinkedList<Payment>();
+        this.special = special;
+    }
 
-    public CreditCard(){
+    public CreditCard(int dayOfClosing,int monthOfClosing, Client holder){
+        this(dayOfClosing,monthOfClosing,holder,false);
+        this.monthlyFee = 0;
+        this.limit = 400;
+        this.benefits = new Benefits();
+    }
+
+    public CreditCard(int dayOfClosing,int monthOfClosing, Client holder){
+        this(dayOfClosing,monthOfClosing,holder,false);
+        this.monthlyFee = 0;
+        this.limit = 400;
+        this.benefits = new Benefits();
+    }
+
+
+
+    public void getCardInfo(){
 
     }
 
-    public String getCardInfo(){
+    public void setPassword(){
 
     }
 
-    public void changeSecurityCode(){
+    public void setSecurityCode(){
 
     }
 

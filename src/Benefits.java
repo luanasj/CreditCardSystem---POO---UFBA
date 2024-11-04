@@ -8,7 +8,7 @@ public class Benefits {
 
     }
 
-    public String getBenefits(){
+    public void getBenefits(){
 
     }
 
