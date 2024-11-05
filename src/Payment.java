@@ -3,9 +3,6 @@ import java.time.LocalDate;
 
 public class Payment {
     private LocalDate date;
-
-
-
     private double value;
 
     public Payment(LocalDate date,double value){

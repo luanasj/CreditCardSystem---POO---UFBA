@@ -5,11 +5,31 @@ public class Benefits {
     public boolean discounts;
 
     public Benefits(){
-
+        this.miles = false;
+        this.cashback = false;
+        this.points = false;
+        this.discounts = false;
     }
 
-    public void getBenefits(){
+    public Benefits(boolean activateAll){
+        this.miles = true;
+        this.cashback = true;
+        this.points = true;
+        this.discounts = true;
+    }
 
+    public Benefits(boolean miles, boolean cashback,boolean points, boolean discounts){
+        this.miles = miles;
+        this.cashback = cashback;
+        this.points = points;
+        this.discounts = discounts;
+    }
+
+
+
+    public String getBenefits(){
+        String activeBenefits = "beneficios ativos: " + (miles?"milhas; ":"") + (cashback ? "cashback; " : "") + (points?"pontos; " : "") + (discounts?"discontos; " : "");
+        return activeBenefits;
     }
 
     public void setMiles(boolean miles) {
