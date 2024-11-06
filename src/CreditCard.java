@@ -66,15 +66,8 @@ public class CreditCard {
         return this.bills.subList(this.bills.size() - 1 - num,this.bills.size() -1);
     }
 
-    public Bill getLastBill(){
-        boolean isCurrent = this.bills.get(this.bills.size()-1).getMonth() == LocalDate.now().getMonthValue() && this.bills.get(this.bills.size()-1).getYear() == LocalDate.now().getYear();
-        boolean hasPassedClosing = LocalDate.now().getDayOfMonth() >= closing.getDayOfMonth();
-        if(isCurrent && hasPassedClosing){
-            HashMap<String,Transaction> newBillTransactions;
-            int i = 0;
-            while(i<this.history.size() && this.history.values().toArray()[i].)
-        }
-        return this.bills.get(this.bills.size()-1);
+    public Bill getBill(){
+
     }
 
 
