@@ -16,8 +16,7 @@ public class CreditCard {
     private LocalDate closing; //saldo,depesa do mes
     private Benefits benefits;
     private Client holder;
-    private List<Bill> bills;
-    private HashMap<String,Transaction> history;
+    private HashMap<String,Bill> bills;
 
     private CreditCard(int dayOfClosing,int monthOfClosing, Client holder,boolean special){
         this.number = UUID.randomUUID().toString();
@@ -26,8 +25,7 @@ public class CreditCard {
         this.securityCode = String.valueOf(Math.floor(Math.random()*100));
         this.closing = LocalDate.of(LocalDate.now().getYear(), monthOfClosing,dayOfClosing);
         this.holder = holder;
-        this.bills = new LinkedList<Bill>();
-        this.history = new HashMap<String,Transaction>();
+        this.bills = new HashMap<String,Bill>();
         this.special = special;
     }
 
@@ -63,38 +61,60 @@ public class CreditCard {
 
 
     public List<Bill> getLastBills(int num) {
-        return this.bills.subList(this.bills.size() - 1 - num,this.bills.size() -1);
+
     }
 
     public Bill getLastBill(){
-        boolean isCurrent = this.bills.get(this.bills.size()-1).getMonth() == LocalDate.now().getMonthValue() && this.bills.get(this.bills.size()-1).getYear() == LocalDate.now().getYear();
-        boolean hasPassedClosing = LocalDate.now().getDayOfMonth() >= closing.getDayOfMonth();
-        if(isCurrent && hasPassedClosing){
-            HashMap<String,Transaction> newBillTransactions;
-            int i = 0;
-            while(i<this.history.size() && this.history.values().toArray()[i].)
-        }
-        return this.bills.get(this.bills.size()-1);
-    }
 
 
-    public HashMap<String,Transaction> getTransactionsHistory(int num) {
-        return this.history
+
     }
+
 
     public void payBill(){
 
     }
 
     public double getLimit(){
+        return this.limit;
+    }
+
+    public void changeLimit(double limit){
+        this.limit = limit;
+    }
+
+
+    public void createTransaction( String name, double value, Establishment establishment, boolean installment){
+        String currentMonth = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear();
+        if(passedClosingOfTheMonth(LocalDate.now())){
+            bills.put(currentMonth,new Bill(LocalDate.now(), new HashMap<String,Transaction>()));
+        }
+        Transaction newTransaction = new Transaction(name,value,establishment,installment,"1");
+        bills.get(currentMonth).getTransactions().put(name,newTransaction);
+    }
+
+    public void createTransaction(String name, double value, Establishment establishment, boolean installment, int installments){
+        //parcelado
+        double installmentValue = value/installments;
+        for(int i = 0;i<installments;i++){
+            LocalDate installmentDate = LocalDate.now().plusMonths(i);
+            String currentMonth = installmentDate.getMonthValue() + "/" + installmentDate.getYear();
+            if(passedClosingOfTheMonth(installmentDate)){
+                bills.put(currentMonth,new Bill(LocalDate.now(), new HashMap<String,Transaction>()));
+            }
+            Transaction newTransaction = new Transaction(name,installmentValue,establishment,installment,String.valueOf(i));
+            bills.get(currentMonth).getTransactions().put(name,newTransaction);
+        }
 
     }
 
-    public double changeLimit(){
+    private void creteBill(){
 
     }
 
-    public void makeInstallment(){
-
+    private boolean passedClosingOfTheMonth(LocalDate date){
+        boolean exists =  bills.get(date.getMonthValue() + "/" + date.getYear()) == null;
+        boolean hasPassedClosing = date.getDayOfMonth() >= closing.getDayOfMonth();
+        return exists && hasPassedClosing;
     }
 }
