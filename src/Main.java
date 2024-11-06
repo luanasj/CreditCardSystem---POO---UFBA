@@ -17,6 +17,6 @@ public class Main {
         HashMap<String, Integer> map = new HashMap<>(); map.put("A", 1); map.put("B", 2); map.put("C", 3);
         Collection<Integer> values = map.values(); System.out.println("Valores no mapa: " + values);
         // Adicionando um novo valor ao mapa
-        map.put("D", 4); System.out.println("Valores atualizados no mapa: "+ values);
+        map.put("D", 4); System.out.println("Valores atualizados no mapa: "+ values.toArray()[0]);
     }
 }

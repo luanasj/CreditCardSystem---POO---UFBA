@@ -29,6 +29,11 @@ public class Transaction {
         return "ID: " + this.id + "\n" +this.name + "\n" + this.date + "Valor da Compra: " + this.value +"\n" + this.establishment.getFacilityInfo() +  (installment?"\nParcela:" + this.parcela : "");
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+
     public double getValue() {
         return value;
     }
