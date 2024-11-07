@@ -6,19 +6,23 @@ import java.util.List;
 import java.util.UUID;
 
 public class CreditCard {
+    //construir a lógica de como o limite e o saldo vão se comportar.
+
     private String number;
     private String password;
     private LocalDate expiration;
     private String securityCode;
     private boolean special;
+    private AccountType accountType;
     private double monthlyFee;
     private double limit;
     private LocalDate closing; //saldo,depesa do mes
     private Benefits benefits;
     private Client holder;
     private HashMap<String,Bill> bills;
+    private final String adminPassword = "senhaDificil";
 
-    private CreditCard(int dayOfClosing,int monthOfClosing, Client holder,boolean special){
+    protected CreditCard(int dayOfClosing,int monthOfClosing, Client holder,boolean special){
         this.number = UUID.randomUUID().toString();
         this.password = String.valueOf(Math.floor(Math.random()*1000));
         this.expiration = LocalDate.now().plusYears(4);
@@ -36,19 +40,38 @@ public class CreditCard {
         this.benefits = new Benefits();
     }
 
-    public CreditCard(int dayOfClosing,int monthOfClosing, Client holder,Benefits benefits, double initialLimit){
+    public CreditCard(int dayOfClosing,int monthOfClosing, Client holder,Benefits benefits, double initialLimit,AccountType accountType){
         this(dayOfClosing,monthOfClosing,holder,true);
-        this.monthlyFee = 20;
+        this.monthlyFee = accountType.getValue();
         this.limit = initialLimit;
         this.benefits = benefits;
+        this.accountType = accountType;
     }
 
     public void getCardInfo(){
-
+        String basicCardInfo = "Numero do Cartao: " + this.number + "\n Valido até: " + this.expiration + "\n Código de Segurança: " + this.securityCode + (special?"\nTipo de Conta: "+ accountType + "\nTaxa Mensal: " + this.accountType.getValue():"") + "\nDia de Fechamento de Fatura" + this.closing.getDayOfMonth();
     }
 
-    public void setPassword(String password){
-        this.password = password;
+    public String getNumber() {
+        return number;
+    }
+
+    public String setPassword(String previousPassword,String newPassword){
+        if(previousPassword == this.password){
+            this.password = newPassword;
+            return "Senha alterada";
+        }
+
+        return "Senha incorreta";
+    }
+
+    public String setPassword(String adminPassword){
+        if(adminPassword == this.adminPassword){
+            this.password = String.valueOf(Math.floor(Math.random()*1000));
+            return "Nova senha:" + this.password;
+        }
+
+        return "Senha incorreta";
     }
 
     public void setSecurityCode(String securityCode){
@@ -60,22 +83,8 @@ public class CreditCard {
     }
 
 
-    public List<Bill> getLastBills(int num) {
-
-    }
-
-    public Bill getLastBill(){
-
-    public Bill getBill(){
-
-    }
-
-
-    }
-
-
-    public void payBill(){
-
+    public Bill getBill(String month){
+        return this.bills.get(month);
     }
 
     public double getLimit(){
@@ -111,13 +120,12 @@ public class CreditCard {
 
     }
 
-    private void creteBill(){
-
-    }
 
     private boolean passedClosingOfTheMonth(LocalDate date){
         boolean exists =  bills.get(date.getMonthValue() + "/" + date.getYear()) == null;
         boolean hasPassedClosing = date.getDayOfMonth() >= closing.getDayOfMonth();
         return exists && hasPassedClosing;
     }
+
+
 }

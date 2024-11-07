@@ -8,15 +8,11 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        Adress client1Adress = new Adress("ruazinha","bairrozinho","234","6714-368","Salcity","Bahivis","Brazil");
+        Client client1 = new Client("Fulano",new Date("02/28/2000"),false,"000-000-000-01",client1Adress);
 
+        client1.createCreditCard(01,07,client1);
 
-
-
-        LocalDate data = LocalDate.now().plusYears(4);
-        System.out.println(data.getMonthValue());
-        HashMap<String, Integer> map = new HashMap<>(); map.put("A", 1); map.put("B", 2); map.put("C", 3);
-        Collection<Integer> values = map.values(); System.out.println("Valores no mapa: " + values);
-        // Adicionando um novo valor ao mapa
-        map.put("D", 4); System.out.println("Valores atualizados no mapa: "+ map.get("F"));
+        System.out.println(client1.getClientCardsList());
     }
 }
