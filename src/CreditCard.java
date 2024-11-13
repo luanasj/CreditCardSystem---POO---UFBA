@@ -38,6 +38,7 @@ public class CreditCard {
         this.monthlyFee = 0;
         this.limit = 400;
         this.benefits = new Benefits();
+        this.accountType = AccountType.SIMPLE;
     }
 
     public CreditCard(int dayOfClosing,int monthOfClosing, Client holder,Benefits benefits, double initialLimit,AccountType accountType){
@@ -46,6 +47,10 @@ public class CreditCard {
         this.limit = initialLimit;
         this.benefits = benefits;
         this.accountType = accountType;
+    }
+
+    public CreditCard(String nomeCliente, double initialLimit){
+        this(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), new Client(nomeCliente));
     }
 
     public void getCardInfo(){
@@ -88,6 +93,15 @@ public class CreditCard {
     }
 
     public double getLimit(){
+
+        return this.limit;
+    }
+
+    public double getAvailableLimit(){
+        double availableLimit = limit;
+        for(Bill bill : bills.values()){
+            availableLimit -= bill.getBalance();
+        }
         return this.limit;
     }
 
@@ -96,28 +110,67 @@ public class CreditCard {
     }
 
 
-    public void createTransaction( String name, double value, Establishment establishment, boolean installment){
-        String currentMonth = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear();
-        if(passedClosingOfTheMonth(LocalDate.now())){
-            bills.put(currentMonth,new Bill(LocalDate.now(), new HashMap<String,Transaction>()));
+    public void createTransaction( String name, double value, Establishment establishment){
+        if(getAvailableLimit() - value > 0){
+            String currentMonth = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear();
+            if (passedClosingOfTheMonth(LocalDate.now())) {
+                bills.put(currentMonth, new Bill(LocalDate.now()));
+            }
+            Transaction newTransaction = new Transaction(name, value, establishment, false, "1");
+            bills.get(currentMonth).getTransactions().put(name, newTransaction);
         }
-        Transaction newTransaction = new Transaction(name,value,establishment,installment,"1");
-        bills.get(currentMonth).getTransactions().put(name,newTransaction);
+    }
+
+    public void createTransaction( String name, double value, Establishment establishment, String benefit, float benefitTax){
+        switch (benefit){
+            case "cashback":
+                if(benefits.isCashback()){
+                    value *= benefitTax;
+                }
+                break;
+            case "points":
+                if(benefits.isPoints()){
+                    value -= benefitTax;
+                }
+                // code block
+                break;
+            case "miles":
+                if(benefits.isMiles()){
+                    benefits.setMiles(benefits.); -= benefitTax;
+                }
+                //
+            case "discounts":
+                //
+            default:
+
+        }
+    }
+
+    public void createTransaction( String name, double value, Establishment establishment){
+        if(getAvailableLimit() - value > 0){
+            String currentMonth = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear();
+            if (passedClosingOfTheMonth(LocalDate.now())) {
+                bills.put(currentMonth, new Bill(LocalDate.now()));
+            }
+            Transaction newTransaction = new Transaction(name, value, establishment, false, "1");
+            bills.get(currentMonth).getTransactions().put(name, newTransaction);
+        }
     }
 
     public void createTransaction(String name, double value, Establishment establishment, boolean installment, int installments){
         //parcelado
-        double installmentValue = value/installments;
-        for(int i = 0;i<installments;i++){
-            LocalDate installmentDate = LocalDate.now().plusMonths(i);
-            String currentMonth = installmentDate.getMonthValue() + "/" + installmentDate.getYear();
-            if(passedClosingOfTheMonth(installmentDate)){
-                bills.put(currentMonth,new Bill(LocalDate.now(), new HashMap<String,Transaction>()));
+        if(getAvailableLimit() - value > 0){
+            double installmentValue = value / installments;
+            for (int i = 0; i < installments; i++) {
+                LocalDate installmentDate = LocalDate.now().plusMonths(i);
+                String currentMonth = installmentDate.getMonthValue() + "/" + installmentDate.getYear();
+                if (passedClosingOfTheMonth(installmentDate)) {
+                    bills.put(currentMonth, new Bill(LocalDate.now()));
+                }
+                Transaction newTransaction = new Transaction(name, installmentValue, establishment, installment, String.valueOf(i));
+                bills.get(currentMonth).getTransactions().put(name, newTransaction);
             }
-            Transaction newTransaction = new Transaction(name,installmentValue,establishment,installment,String.valueOf(i));
-            bills.get(currentMonth).getTransactions().put(name,newTransaction);
         }
-
     }
 
 

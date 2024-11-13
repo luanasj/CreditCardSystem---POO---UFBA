@@ -20,6 +20,15 @@ public class Client {
         this.creditCards = new LinkedList<>();
     }
 
+    public Client(String name) {
+        this.name = name;
+        this.birthday = null;
+        this.enterprise = false;
+        this.doc = "";
+        this.adress = null;
+        this.creditCards = new LinkedList<>();
+    }
+
     public String getClientInfo() {
         String clientInfo = this.name + "\n" + this.birthday + "\n" +  (this.enterprise ? "CNPJ: " : "CPF: ") + this.doc + "\n" + adress.getAdress();
 

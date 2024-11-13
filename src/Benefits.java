@@ -1,14 +1,22 @@
 public class Benefits {
-    public boolean miles;
-    public boolean cashback;
-    public boolean points;
-    public boolean discounts;
+    private boolean miles;
+    private int milesTax;
+    private boolean cashback;
+    private int cashbackTax;
+    private boolean points;
+    private int pointsTax;
+    private boolean discounts;
+    private int discountsTax;
 
     public Benefits(){
         this.miles = false;
+        this.milesTax = 0;
         this.cashback = false;
+        this.cashbackTax = 0;
         this.points = false;
+        this.pointsTax = 0;
         this.discounts = false;
+        this.discountsTax = 0;
     }
 
     public Benefits(boolean activateAll){
@@ -28,7 +36,7 @@ public class Benefits {
 
 
     public String getBenefits(){
-        String activeBenefits = "beneficios ativos: " + (miles?"milhas; ":"") + (cashback ? "cashback; " : "") + (points?"pontos; " : "") + (discounts?"discontos; " : "");
+        String activeBenefits = "beneficios ativos: " + (miles?"milhas: " + this.milesTax + "\n":"") + (cashback ? "cashback: "+ this.cashbackTax+ "\n" : "") + (points?"pontos: "+this.pointsTax+ "\n" : "") + (discounts?"discontos: "+this.discountsTax+"\n" : "");
         return activeBenefits;
     }
 
@@ -47,4 +55,23 @@ public class Benefits {
     public void setPoints(boolean points) {
         this.points = points;
     }
+
+    public boolean isMiles() {
+        return miles;
+    }
+
+    public boolean isCashback() {
+        return cashback;
+    }
+
+    public boolean isPoints() {
+        return points;
+    }
+
+    public boolean isDiscounts() {
+        return discounts;
+    }
+
+
+
 }

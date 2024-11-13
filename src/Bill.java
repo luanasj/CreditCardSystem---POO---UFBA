@@ -12,31 +12,29 @@ public class Bill {
     private double minimumPayment;
     private boolean paid;
 
-    private Bill(LocalDate date){
+    public Bill(LocalDate date){
         this.month = date.getMonthValue();
         this.year = date.getYear();
         this.payments = new ArrayList<Payment>();
         this.paid = false;
-    }
-
-    public Bill(LocalDate date, HashMap<String,Transaction> transactions){
-        this(date);
-        this.transactions = transactions;
-        this.value = getBalance(transactions);
+        this.transactions = new HashMap<String,Transaction>();
+        this.value = getBalance();
         this.balance = this.value;
         this.minimumPayment = this.value*(0.4);
     }
 
-    public Bill(LocalDate date, HashMap<String,Transaction> transactions,double monthlyFee){
+
+
+    public Bill(LocalDate date,double monthlyFee){
         this(date);
-        this.transactions = transactions;
-        this.value = getBalance(transactions) + monthlyFee;
+        this.transactions = new HashMap<String,Transaction>();
+        this.value = getBalance() + monthlyFee;
         this.balance = this.value;
         this.minimumPayment = this.value*(0.4);
     }
 
-    private double getBalance(HashMap<String,Transaction> transactions){
-        Collection<Transaction> values = transactions.values();
+    public double getBalance(){
+        Collection<Transaction> values = this.transactions.values();
         double valuesSum = 0;
         for(Transaction transaction : values){
             valuesSum += transaction.getValue();
