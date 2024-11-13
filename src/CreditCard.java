@@ -135,27 +135,18 @@ public class CreditCard {
                 // code block
                 break;
             case "miles":
-                if(benefits.isMiles()){
-                    benefits.setMiles(benefits.); -= benefitTax;
-                }
                 //
+                break;
             case "discounts":
                 //
+                break;
             default:
-
         }
+
+        this.createTransaction(name,value,establishment);
+
     }
 
-    public void createTransaction( String name, double value, Establishment establishment){
-        if(getAvailableLimit() - value > 0){
-            String currentMonth = LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear();
-            if (passedClosingOfTheMonth(LocalDate.now())) {
-                bills.put(currentMonth, new Bill(LocalDate.now()));
-            }
-            Transaction newTransaction = new Transaction(name, value, establishment, false, "1");
-            bills.get(currentMonth).getTransactions().put(name, newTransaction);
-        }
-    }
 
     public void createTransaction(String name, double value, Establishment establishment, boolean installment, int installments){
         //parcelado
