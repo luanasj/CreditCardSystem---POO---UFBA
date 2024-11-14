@@ -63,6 +63,16 @@ public class Bill {
         return this.transactions;
     }
 
+    public HashMap<String, Transaction> getTransactions(TransactionType transactionType) {
+        HashMap<String, Transaction> transactiosForType = new HashMap<String, Transaction>();
+        for(String transactionkey : this.transactions.keySet()){
+            if(this.transactions){
+
+            }
+
+        }
+    }
+
     public List<Payment> getPayments() {
         return this.payments;
     }

@@ -116,7 +116,7 @@ public class CreditCard {
             if (passedClosingOfTheMonth(LocalDate.now())) {
                 bills.put(currentMonth, new Bill(LocalDate.now()));
             }
-            Transaction newTransaction = new Transaction(name, value, establishment, false, "1");
+            Transaction newTransaction = new Transaction(name, value, establishment, false, "1",TransactionType.BUY);
             bills.get(currentMonth).getTransactions().put(name, newTransaction);
         }
     }
@@ -148,7 +148,7 @@ public class CreditCard {
     }
 
 
-    public void createTransaction(String name, double value, Establishment establishment, boolean installment, int installments){
+    public void createTransaction(String name, double value, Establishment establishment, int installments){
         //parcelado
         if(getAvailableLimit() - value > 0){
             double installmentValue = value / installments;
@@ -158,7 +158,7 @@ public class CreditCard {
                 if (passedClosingOfTheMonth(installmentDate)) {
                     bills.put(currentMonth, new Bill(LocalDate.now()));
                 }
-                Transaction newTransaction = new Transaction(name, installmentValue, establishment, installment, String.valueOf(i));
+                Transaction newTransaction = new Transaction(name, installmentValue, establishment, true, String.valueOf(i),TransactionType.BUY);
                 bills.get(currentMonth).getTransactions().put(name, newTransaction);
             }
         }

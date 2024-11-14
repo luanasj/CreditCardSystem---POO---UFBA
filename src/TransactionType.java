@@ -1,5 +1,5 @@
 public enum TransactionType {
-    BUY("compra"),PAYMMENT("pagamento"),CHARGEBACK("estorno");
+    BUY("compra"),PAYMMENT("pagamento"),CHARGEBACK("estorno"),INSTALLMENT("parcelamento");
 
     private String dsc;
 
