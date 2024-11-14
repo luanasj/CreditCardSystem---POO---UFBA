@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Transaction {
+
+
     private String id;
     private String name;
     private LocalDate date;
@@ -35,9 +37,13 @@ public class Transaction {
         return value;
     }
 
+    public String getId() {
+        return id;
+    }
 
     public String cancelTransaction(HashMap<String,Transaction> transactionsList){
-        transactionsList.remove(this.id);
+        Transaction chargebackTransaction = new Transaction(this.name,0-this.value, this.establishment,this.installment,this.parcela);
+        transactionsList.put(chargebackTransaction.getId(),chargebackTransaction);
         return "Transação: " + this.name + " cancelada.";
     }
 
