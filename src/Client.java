@@ -70,5 +70,9 @@ public class Client {
         this.enterprise = enterprise;
     }
 
+    public boolean getEnterprise() {
+        return this.enterprise;
+    }
+
 
 }

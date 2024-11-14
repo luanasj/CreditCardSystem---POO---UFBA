@@ -164,12 +164,18 @@ public class CreditCard {
         }
     }
 
-
+    
+    
     private boolean passedClosingOfTheMonth(LocalDate date){
         boolean exists =  bills.get(date.getMonthValue() + "/" + date.getYear()) == null;
         boolean hasPassedClosing = date.getDayOfMonth() >= closing.getDayOfMonth();
         return exists && hasPassedClosing;
     }
 
+    public void changeClient(Client newHolder){
+        if(this.holder.getEnterprise()){
+            this.holder = newHolder;
+        }
+    }
 
 }
