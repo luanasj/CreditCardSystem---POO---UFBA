@@ -63,15 +63,30 @@ public class Bill {
         return this.transactions;
     }
 
+    public HashMap<String, Transaction> getTransactions(int day) {
+        HashMap<String, Transaction> transactiosForDate = new HashMap<String, Transaction>();
+        for(Transaction transaction : this.transactions.values()){
+            boolean transactionDay = transaction.getDate().getDayOfMonth() == day;
+            if(transaction.getDate().getDayOfMonth() == day){
+                transactiosForDate.put(transaction.getId(), transaction);
+            }
+        }
+
+        return transactiosForDate;
+    }
+
     public HashMap<String, Transaction> getTransactions(TransactionType transactionType) {
         HashMap<String, Transaction> transactiosForType = new HashMap<String, Transaction>();
-        for(String transactionkey : this.transactions.keySet()){
-            if(this.transactions){
-
+        for(Transaction transaction : this.transactions.values()){
+            if(transaction.getTransactionType() == transactionType){
+                transactiosForType.put(transaction.getId(), transaction);
             }
-
         }
+
+        return transactiosForType;
     }
+
+
 
     public List<Payment> getPayments() {
         return this.payments;

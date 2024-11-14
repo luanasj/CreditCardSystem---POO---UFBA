@@ -44,6 +44,11 @@ public class Transaction {
         return id;
     }
 
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+
     public String cancelTransaction(HashMap<String,Transaction> transactionsList){
         Transaction chargebackTransaction = new Transaction(this.name,0-this.value, this.establishment,this.installment,this.parcela,TransactionType.CHARGEBACK);
         transactionsList.put(chargebackTransaction.getId(),chargebackTransaction);
